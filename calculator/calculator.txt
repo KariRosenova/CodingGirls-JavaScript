@@ -1,0 +1,173 @@
+$(document).ready(function () {
+	var key = null;
+
+	$('.del-bg').click(function () {
+		$('#result').text("");
+	});
+
+	$('.btn-style num-bg num').click(function() {
+		var EText = $('#result').val();
+		if (EText != "0"){
+			var val1 = EText;
+			var ButtonVal = $(this);
+			var val2 = ButtonVal.text();
+			var Res = val1 + val2;
+			$('#result').val(Res);
+		}
+		else{
+			$('#result').val();
+		}
+	});
+
+
+	$(function () {
+		var interRes = null;
+		var operator;
+		$('.btn-style opera-bg value align operator').click(function () {
+			var value1 = $('#result').val();
+			if (interRes != null) {
+				var result = ApplyOpperation(interRes, value1, operator);
+				interRes = result;
+			}
+			else {
+				interRes = value1;
+			}
+			operator = $(this).text();
+			$('input').val("");
+		});
+	});
+
+	function ApplyOperation(value1, value2, operator) {
+		var res;
+		switch (operator) {
+			case "+":
+				res = addition(value1, value2);
+				break;
+			case "-":
+				res = substraction(value1, value2);
+				break;
+			case "*":
+				res = multiplication(value1, value2);
+				break;
+			case "/":
+				res = division(value1, value2);
+				break;
+		}
+		return res;
+	}
+
+	function addition(first, second) {
+		var a = parseFloat(first);
+		var b = parseFloat(second);
+		var total = a + b;
+		console.log(total);
+        console.log(typeof result);
+	}
+
+	function substraction(first, second) {
+		var a = parseFloat(first);
+		var b = parseFloat(second);
+		var total = a - b;
+		return total;
+	}
+
+	function multiplication(first, second) {
+		var a = parseFloat(first);
+		var b = parseFloat(second);
+		var total = a * b;
+		return total;
+	}
+
+	function division(first, second) {
+		var a = parseFloat(first);
+		var b = parseFloat(second);
+		var total = a / b;
+		return total;
+	}
+	
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+let num1 = '';
+let num2 = '';
+let operator = '';
+let total = '';
+
+$(document).ready(function() {
+    $('button').on('click', function(e) {
+        let btn = e.target.innerHTML;
+        if (btn >= '0' && btn <= '9') {
+            handleNumber(btn);
+        } else {
+            handleOperator(btn);
+        }
+    });
+});
+
+function handleNumber(num) {
+    if (num1 === '') {
+        num1 = num;
+    } else {
+        num2 = num;
+    }
+    displayButton(num);
+}
+
+function handleOperator(oper) {
+    if (operator === '') {
+        operator = oper;
+    } else {
+        handleTotal();
+        operator = oper;
+    }
+}
+
+function handleTotal() {
+    switch (operator) {
+        case '+':
+            total = +num1 + +num2;
+            displayButton(total);
+            break;
+        case '-':
+            total = +num1 - +num2;
+            displayButton(total);
+            break;
+        case '/':
+            total = +num1 / +num2;
+            displayButton(total);
+            break;
+        case 'X':
+            total = +num1 * +num2;
+            displayButton(total);
+            break;
+    }
+    updateVariables();
+}
+
+function displayButton(btn) {
+    $('#result').text(btn);
+}
+
+function updateVariables() {
+    num1 = total;
+    num2 = '';
+}
