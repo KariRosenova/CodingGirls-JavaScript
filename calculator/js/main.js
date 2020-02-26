@@ -86,8 +86,8 @@ function displayButton(btn) {
 } 
 
 function clear() {
-	$("#result").empty();
-	num1 = 0;
+  $("#result").empty();
+  num1 = 0;
   num2 = 0;
   i = 0;
   operator = '';
