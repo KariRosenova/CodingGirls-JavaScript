@@ -1,10 +1,12 @@
 $(document).ready(function() {
-  let num1 = '';
-  let num2 = '';
+  let num1 = 0;
+  let num2 = 0;
+  let number;
+  let i = 0;
   let operator = '';
   let result = 0;
 
-  $('#result').text(0);
+ // $('#result').text(0);
   
   $('button').click(function() {
     let buttonPressed = $(this).html();
@@ -13,63 +15,70 @@ $(document).ready(function() {
    
 
     if (buttonPressed >= '0' && buttonPressed <= '9') {
-    	handleNumber(buttonPressed);
+      if (i == 0) {
+        if(num1 != '0'){
+            number = '' + num1 + buttonPressed;
+        }
+        else{
+          number = buttonPressed;
+        }
+      }else{
+        if(num2 != '0'){
+            number = '' + num2 + buttonPressed;
+        }
+        else{
+          number = buttonPressed;
+        }
+      }
+      handleNumber(number);
     }
     else if (buttonPressed === 'Clear') {
     	clear();
     }
     else if (buttonPressed === '=') {
-      	num2 = handleTotal(num1, num2, operator);
+      	result = handleResult(num1, num2, operator);
       	operator = null;
     }
     else {
     	handleOperator(buttonPressed);
+
     }
     console.log(buttonPressed);
 });
 
 function handleNumber(num) {
-  	if (num1 === '') {
-   		num1 = num; 
-	}
-    else {
-    	num2 = num;
+    if (i == 0) {
+      num1 = Number(num);
+    }else{
+      num2 = Number(num);
     }
   	displayButton(num);
 }
 
 
 function handleOperator(oper) {
-	if (operator === '') {
-		operator = oper;
-	}
-	else {
-		handleTotal();
-		operator = oper;
-	}
+  operator = oper;
+  i = 1;
 	displayButton(oper);
 }
 
-function handleTotal() {
+
+function handleResult(num1, num2, operator){
     switch (operator) {
         case '+':
-            result = Number(num1) + Number(num2);
-            displayButton(result);
+            result = num1 + num2;
             break;
         case '-':
-            result = Number(num1) - Number(num2);
-            displayButton(result);
+            result = num1 - num2;
             break;
         case '/':
-            result =  Number(num1) / Number(num2);
-            displayButton(result);
+            result = num1 / num2;
             break;
         case 'x':
-            result =  Number(num1) * Number(num2);
-            displayButton(result);
+            result = num1 * num2;
             break;
     }
-    updateVariables();
+    displayButton(Number(result));
 }
 
 function displayButton(btn) {
@@ -78,15 +87,10 @@ function displayButton(btn) {
 
 function clear() {
 	$("#result").empty();
-	num1 = '';
-    num2 = '';
-    operator = '';
-    result = 0;
+	num1 = 0;
+  num2 = 0;
+  i = 0;
+  operator = '';
+  result = 0;
 }
-
-function updateVariables() {
-	num1 = result;
-	num2 = '';
-}
-
 });
